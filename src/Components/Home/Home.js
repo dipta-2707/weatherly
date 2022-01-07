@@ -6,30 +6,37 @@ import {
   TextField,
   InputAdornment,
 } from "@mui/material";
-import Week from "../Week/Week";
 import Humidity from "../Highlights/Humidity";
 import SunriseDown from "../Highlights/SunriseDown";
 import Wind from "../Highlights/Wind";
 import Visibility from "../Highlights/Visibility";
 import SearchIcon from "@mui/icons-material/Search";
 import cityImage from "../../Assets/city.jpg";
+import TodayIcon from "@mui/icons-material/Today";
 
 function Home(props) {
   const [weater, setWeather] = useState({});
   const [imageUrl, setImageUrl] = useState("");
   const [search, setSearch] = useState("Dhaka");
   const { REACT_APP_WAPI_KEY } = process.env;
+  let serachBackup = "";
   const getWeather = async () => {
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${REACT_APP_WAPI_KEY}`
-    ).catch((e) => {
-      console.log(e);
-    });
-    const data = await response.json();
-    setWeather(data);
-    console.log(data.weather[0].description);
-    const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-    setImageUrl(iconUrl);
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${REACT_APP_WAPI_KEY}`
+      ).catch((e) => {
+        console.log(e);
+      });
+      const data = await response.json();
+      // have to add search backup try catch
+      setWeather(data);
+      console.log(data?.weather[0]?.description);
+      console.log(data);
+      const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+      setImageUrl(iconUrl);
+    } catch (e) {
+      console.log("catch log");
+    }
   };
 
   useEffect(() => {
@@ -129,6 +136,7 @@ function Home(props) {
             <Typography variant="h5">
               {/* {weater?.weather[0]?.description} */}
             </Typography>
+            <TodayIcon sx={{ color: "#4c35ae" }} />
             <Typography variant="subtitle2">{dayName}</Typography>
 
             <Box
@@ -144,8 +152,10 @@ function Home(props) {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={9}>
-          <Typography variant="h4">Highlights</Typography>
+        <Grid item xs={12} sm={9} p={1}>
+          <Typography variant="h4" pl={2}>
+            Highlights
+          </Typography>
           <Grid container>
             <Grid item xs={6} sm={4}>
               {" "}
