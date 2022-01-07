@@ -19,7 +19,7 @@ function Home(props) {
   const [imageUrl, setImageUrl] = useState("");
   const [search, setSearch] = useState("Dhaka");
   const { REACT_APP_WAPI_KEY } = process.env;
-  let serachBackup = "";
+  let dataBackup;
   const getWeather = async () => {
     try {
       const response = await fetch(
@@ -29,7 +29,10 @@ function Home(props) {
       });
       const data = await response.json();
       // have to add search backup try catch
-      setWeather(data);
+      if (data?.weather[0]?.description) {
+        setWeather(data);
+      }
+
       console.log(data?.weather[0]?.description);
       console.log(data);
       const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
@@ -134,7 +137,7 @@ function Home(props) {
               {Math.round(weater?.main?.temp - 273.15)}°c
             </Typography>
             <Typography variant="h5">
-              {/* {weater?.weather[0]?.description} */}
+              {weater?.weather[0]?.description}
             </Typography>
             <TodayIcon sx={{ color: "#4c35ae" }} />
             <Typography variant="subtitle2">{dayName}</Typography>
