@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import CountUp from "react-countup";
 
 function Visibility(props) {
   return (
@@ -15,7 +16,7 @@ function Visibility(props) {
       </Box>
 
       <Typography display="inline-block" variant="h2" pt={1}>
-        {props.visibility}
+        <CountUp end={props.visibility} />
       </Typography>
       <Typography display="inline" variant="h5">
         <span> </span>km

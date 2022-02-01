@@ -13,15 +13,19 @@ import Visibility from "../Highlights/Visibility";
 import SearchIcon from "@mui/icons-material/Search";
 import cityImage from "../../Assets/city.jpg";
 import TodayIcon from "@mui/icons-material/Today";
+import CountUp from "react-countup";
 
 function Home(props) {
   const [weater, setWeather] = useState({});
   const [imageUrl, setImageUrl] = useState("");
   const [search, setSearch] = useState("Dhaka");
   const { REACT_APP_WAPI_KEY } = process.env;
+  const [des, setDes] = useState("");
   let dataBackup;
   const getWeather = async () => {
     try {
+      console.log("......................log data..............");
+      console.log(search);
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${REACT_APP_WAPI_KEY}`
       ).catch((e) => {
@@ -32,8 +36,8 @@ function Home(props) {
       if (data?.weather[0]?.description) {
         setWeather(data);
       }
-
-      console.log(data?.weather[0]?.description);
+      setDes(data?.weather[0]?.description);
+      console.log(des);
       console.log(data);
       const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
       setImageUrl(iconUrl);
@@ -134,11 +138,10 @@ function Home(props) {
             }}
           >
             <Typography variant="h1">
-              {Math.round(weater?.main?.temp - 273.15)}°c
+              <CountUp end={Math.round(weater?.main?.temp - 273.15)} />
+              °c
             </Typography>
-            <Typography variant="h5">
-              {weater?.weather[0]?.description}
-            </Typography>
+            <Typography variant="h5">{des}</Typography>
             <TodayIcon sx={{ color: "#4c35ae" }} />
             <Typography variant="subtitle2">{dayName}</Typography>
 

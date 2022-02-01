@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import AirIcon from "@mui/icons-material/Air";
+import CountUp from "react-countup";
 
 function Wind(props) {
   return (
@@ -15,7 +16,7 @@ function Wind(props) {
       </Box>
 
       <Typography display="inline-block" variant="h2" pt={1}>
-        {props.speed}
+        <CountUp end={props.speed} />
       </Typography>
       <Typography display="inline" variant="h5">
         <span> </span>m/s
