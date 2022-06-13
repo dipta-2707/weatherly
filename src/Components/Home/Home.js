@@ -14,6 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import cityImage from "../../Assets/city.jpg";
 import TodayIcon from "@mui/icons-material/Today";
 import CountUp from "react-countup";
+import Cloud from "../Highlights/Cloud";
 
 function Home(props) {
   const [weater, setWeather] = useState({});
@@ -85,6 +86,10 @@ function Home(props) {
       alignItems: "center",
       color: "#FFFFFF",
     },
+    leftBox:{
+      height: "100vh",
+    },
+
   };
   var days = [
     "Sunday",
@@ -100,7 +105,7 @@ function Home(props) {
   return (
     <Box>
       <Grid container>
-        <Grid item className="box-temp" xs={12} p={2} sm={3}>
+        <Grid item className="box-temp" xs={12} p={2} sm={3} style={styles.leftBox}>
           <Box>
             <form onSubmit={handleSubmit}>
               <TextField
@@ -178,6 +183,9 @@ function Home(props) {
             </Grid>
             <Grid item xs={6} sm={4}>
               <Visibility visibility={weater?.visibility / 1000} />
+            </Grid>
+            <Grid item xs={6} sm={4}>
+              <Cloud cloud={weater?.clouds?.all} />
             </Grid>
           </Grid>
         </Grid>
